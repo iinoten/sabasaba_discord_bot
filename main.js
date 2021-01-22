@@ -29,22 +29,33 @@ client.on('message', message =>{
     } else if( message.use === "好きだよ") {
         message.reply("可愛いね")
     } else if( message.content.startsWith(`ping`)  ) {
-            message.reply("lpong")
-            db.collection('users').doc('alovelace').set({
-            first: 'Ada',
-            last: 'Lovelace',
-            born: 1815
-          }).then(()=>{
-            message.reply("完了")
-          }).catch((err)=>{
-            message.reply("ミスった")
-            console.log(err)
-          })
+        message.reply(":coin: lpong")
+        
     } else if (message.content === "ちゃんと挨拶できてえらいねえアイスクリームちゃん" ) {
         message.reply("えっへん")
     } else if (message.content==="!report") {
         client.channels.cache.get( message.channel.id ).send("https://media1.tenor.com/images/a496903c9724d2b4fdbf228d74f6dd25/tenor.gif")
-
+    } else if (message.content==='!register') {
+        console.log(message.author.id)
+        db.collection('test').doc(message.author.id).get().then((docSnapshot)=>{
+            console.log(docSnapshot.exists)
+            if(!docSnapshot.exists) {
+                db.collection('test').doc(message.author.id).set({
+                    balance: 20,
+                    open_date: firebaseAdmin.firestore.Timestamp.now()
+                }).then(()=>{
+                    message.reply(':coin: SabaSabaServer内の共通通貨、"サバコイン"の世界へようこそ！'+message.author.username+'さんのサバコイン口座を開設しました！:coin:')
+                }).catch(err=>{
+                    message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                    console.log(err)
+                })
+            } else {
+                message.reply("ひょっとして、もう口座の開設済みとかじゃない？ サバコイン残高の確認は→ `!残高確認`")
+            }
+        }).catch((err)=>{
+            message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+            console.log(err)
+        })
     }
     
 /*もし送られたメッセージがこんにちはならこんにちは！と返します*/
