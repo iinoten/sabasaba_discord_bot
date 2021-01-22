@@ -51,9 +51,20 @@ client.on('message', message =>{
                     console.log(err)
                 })
             } else {
-                message.reply("ひょっとして、もう口座の開設済みとかじゃない？ サバコイン残高の確認は→ `!残高確認`")
+                message.reply("ひょっとして、もう口座の開設済みとかじゃない？ サバコイン残高の確認は→ `!coin`")
             }
         }).catch((err)=>{
+            message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+            console.log(err)
+        })
+    } else if (message.content==='!coin') {
+        db.collection('test').doc(message.author.id).get().then((docSnapshot)=>{
+            if(docSnapshot.exists) {
+                message.reply(message.author.username+'さんの残高は'+docSnapshot.data().balance+"サバコインです:coin:")
+            } else {
+                message.reply("もしかしてサバコインの口座を開いてないんじゃない？ まずは口座の開設から→ `!register`")
+            }
+        }).catch(err=>{
             message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
             console.log(err)
         })
