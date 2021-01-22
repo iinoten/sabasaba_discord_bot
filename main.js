@@ -1,14 +1,19 @@
 require('dotenv').config()
-var fs       = require('fs');
 const discord = require('discord.js');
-var Canvas   = require('canvas'); // node-canvasをrequireする
-
+const firebase = require('firebase')
 const client = new discord.Client();
+const firebaseAdmin = require('firebase-admin');
+const ServiceAccount = require('./sabasabaserver-maneyforward-firebase-adminsdk-w7667-31b20c2f5d.json');
 /*必須*/
 
-function canvas_saver() {
-    
-}
+firebaseAdmin.initializeApp({
+    apiKey: process.env.APIKEY,
+    authDomain: process.env.AUTHDOMAIN,
+    projectId: process.env.PROJECTURL,
+    credential: firebaseAdmin.credential.cert(ServiceAccount)
+});
+console.log(process.env.APIKEY,process.env.AUTHDOMAIN,process.env.PROJECTURL)
+var db = firebaseAdmin.firestore();
 
 client.on('ready', () => {
     console.log('bot ready!');
@@ -24,7 +29,17 @@ client.on('message', message =>{
     } else if( message.use === "好きだよ") {
         message.reply("可愛いね")
     } else if( message.content.startsWith(`ping`)  ) {
-        
+            message.reply("lpong")
+            db.collection('users').doc('alovelace').set({
+            first: 'Ada',
+            last: 'Lovelace',
+            born: 1815
+          }).then(()=>{
+            message.reply("完了")
+          }).catch((err)=>{
+            message.reply("ミスった")
+            console.log(err)
+          })
     } else if (message.content === "ちゃんと挨拶できてえらいねえアイスクリームちゃん" ) {
         message.reply("えっへん")
     } else if (message.content==="!report") {
