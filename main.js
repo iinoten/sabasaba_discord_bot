@@ -24,21 +24,7 @@ client.on('message', message =>{
     } else if( message.use === "好きだよ") {
         message.reply("可愛いね")
     } else if( message.content.startsWith(`ping`)  ) {
-        var baseImg = new Canvas.Image();
-        baseImg.src = fs.readFileSync('./Image/amongus_icon.jpg');
-        var overImg = new Canvas.Image();
-        overImg.src = "https://cdn.discordapp.com/avatars/" + message.author.id + '/' + message.author.avatar + '.png';
-
-        var canvas = Canvas.createCanvas(baseImg.width,baseImg.height);
-        var ctx = canvas.getContext('2d');
-            
-        // Canvas上に2つの画像を描画する
-        ctx.drawImage(baseImg,0,0);
-        ctx.drawImage(overImg,0,0);
-
-        canvas_saver.save(ctx, "monochrome.png", function(){
-            console.log("画像保存完了したよ!!");
-        });
+        
     } else if (message.content === "ちゃんと挨拶できてえらいねえアイスクリームちゃん" ) {
         message.reply("えっへん")
     } else if (message.content==="!report") {
