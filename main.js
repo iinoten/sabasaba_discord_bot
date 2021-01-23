@@ -149,7 +149,8 @@ client.on('message', message =>{
                                                         const slot_pattern_B = rolling_slot_pattern();
                                                         const slot_pattern_C = rolling_slot_pattern();
                                                         res6.edit(slot_pattern_A +slot_pattern_B +slot_pattern_C ).then(resSlot=>{
-                                                            if ( slot_pattern_A == slot_pattern_B == slot_pattern_C ) {
+                                                            console.log(slot_pattern_A,slot_pattern_B,slot_pattern_C)
+                                                            if ( (slot_pattern_A == slot_pattern_B) && (slot_pattern_A == slot_pattern_C) ) {
                                                                 switch (slot_pattern_A) {
                                                                     case ':seven:':
                                                                         userCoinAccount.update({
