@@ -47,7 +47,7 @@ client.on('message', message =>{
                     total_get: 20,
                     userName: message.author.username
                 }).then(()=>{
-                    message.reply(':coin: SabaSabaServer内の共通通貨、"サバコイン"の世界へようこそ！'+message.author.username+'さんのサバコイン口座を開設しました！:coin:')
+                    message.reply(':coin: SabaSabaServer内の共通通貨、"サバコイン"の世界へようこそ！'+message.author.username+'さんのサバコイン口座を開設しました！(20コインをプレゼント！):coin:')
                 }).catch(err=>{
                     message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
                     console.log(err)
