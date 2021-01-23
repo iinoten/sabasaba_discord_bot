@@ -30,7 +30,7 @@ client.on('message', message =>{
         message.reply("可愛いね")
     } else if( message.content.startsWith(`ping`)  ) {
         message.reply(":coin: lpong")
-        
+        db.collection('test').doc(message.author.id).update({balance: firebaseAdmin.firestore.FieldValue.increment(-1)})
     } else if (message.content === "ちゃんと挨拶できてえらいねえアイスクリームちゃん" ) {
         message.reply("えっへん")
     } else if (message.content==="!report") {
@@ -68,8 +68,57 @@ client.on('message', message =>{
             message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
             console.log(err)
         })
+    } else if( message.content.startsWith(`!throw`)  ) {
+        //送金機能
+        let fromUserCoinAccount = db.collection('test').doc(message.author.id);
+        console.log("判定",Boolean(message.mentions.users.keys().length))
+        if( message.mentions.users.keys().length ) {
+            message.mentions.users.map((user)=>{
+                let toUserCoinAccount = db.collection('test').doc(user.id);
+                if( !(message.author.id == user.id) ) {
+                    // 送り先が送り主と別の人だった場合
+                    fromUserCoinAccount.get().then( fromRes => {
+                        if ( fromRes.exists  ) {
+                            // 送り元の口座が存在した場合
+                            toUserCoinAccount.get().then( toRes => {
+                                if ( toRes.exists  ) {
+                                    // 送り先の口座が存在した場合
+                                    if( fromRes.data().balance > 0 ) {
+                                        //送り主に残高があった場合
+                                        fromUserCoinAccount.update({ balance: firebaseAdmin.firestore.FieldValue.increment( -1 ) }).then(()=>{
+                                            toUserCoinAccount.update({ balance: firebaseAdmin.firestore.FieldValue.increment( 1 ), total_get: firebaseAdmin.firestore.FieldValue.increment( 1 ) }).then(()=>{
+                                                message.reply(':money_with_wings: '+user.username+' さんにサバコインを送りました！ サバコイン残高の確認は→ `!coin`')                        
+                                            }).catch(err=> {
+                                                message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                                                console.log(err)
+                                            })
+                                        }).catch(err=> {
+                                            message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                                            console.log(err)
+                                        })
+                                    } else {
+                                        //送り主に残高がなかった場合
+                                        message.reply(':weary: '+message.author.username+' さんのサバコインがもう無いよ、なんとか集めてきて！')
+                                    }
+                                } else {
+                                    // 送り先の口座が存在しなかった場合
+                                    message.reply(':weary: '+message.author.username+' さんのサバコイン口座がまだできていないっぽい... `!register` で作れることを教えてあげてみて')
+                                }
+                            })
+                        } else {
+                            // 送り元の口座が存在しなかった場合
+                            message.reply(':weary: '+user.username+' さんのサバコイン口座がまだできていないっぽい まずは口座の開設から→ `!register`')
+                    }
+                    })
+                } else {
+                    // 送り先が送り主だった場合
+                        message.reply(':smirk:自分にはコインを送れないよ')
+                }
+            })
+        } else {
+            message.reply(':face_with_monocle: コインを送るには `!throw`から始めて送りたいユーザーをメンションしてみてね')
+        }
     }
-    
 /*もし送られたメッセージがこんにちはならこんにちは！と返します*/
 
 })
