@@ -164,8 +164,8 @@ client.on('message', message =>{
                                                                         break;
                                                                     case ':watermelon:':
                                                                         userCoinAccount.update({
-                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
-                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(16),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(16),
                                                                         }).then(()=> {
                                                                             resSlot.reply(':watermelon:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:watermelon:を揃えて16コインを獲得しました！:watermelon:')
                                                                         }).catch(err=> {
@@ -174,8 +174,8 @@ client.on('message', message =>{
                                                                         break
                                                                     case ':fish:':
                                                                         userCoinAccount.update({
-                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
-                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(40),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(40),
                                                                         }).then(()=> {
                                                                             resSlot.reply(':fish:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:fish:を揃えて40コインを獲得しました！:fish:')
                                                                         }).catch(err=> {
@@ -184,28 +184,28 @@ client.on('message', message =>{
                                                                         break
                                                                     case ':cherries:':
                                                                         userCoinAccount.update({
-                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
-                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(8),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(8),
                                                                         }).then(()=> {
-                                                                            resSlot.reply(':cherries:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:fish:を揃えて5コインを獲得しました！:fish:')
+                                                                            resSlot.reply(':cherries:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:cherries:を揃えて8コインを獲得しました！:cherries:')
                                                                         }).catch(err=> {
                                                                             message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
                                                                         })
                                                                         break
                                                                     case ':green_heart:':
                                                                         userCoinAccount.update({
-                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
-                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(30),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(30),
                                                                         }).then(()=> {
-                                                                            resSlot.reply(':fish:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:fish:を揃えて30コインを獲得しました！:fish:')
+                                                                            resSlot.reply(':green_heart:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:green_heart:を揃えて30コインを獲得しました！:green_heart:')
                                                                         }).catch(err=> {
                                                                             message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
                                                                         })
                                                                         break
                                                                     case ':mushroom:':
                                                                         userCoinAccount.update({
-                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
-                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(3),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(3),
                                                                         }).then(()=> {
                                                                             resSlot.reply(':mushroom:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:mushroom:を揃えて3コインを獲得しました！:mushroom:')
                                                                         }).catch(err=> {
