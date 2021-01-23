@@ -47,14 +47,14 @@ client.on('message', message =>{
                 }).then(()=>{
                     message.reply(':coin: SabaSabaServer内の共通通貨、"サバコイン"の世界へようこそ！'+message.author.username+'さんのサバコイン口座を開設しました！:coin:')
                 }).catch(err=>{
-                    message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                    message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
                     console.log(err)
                 })
             } else {
                 message.reply("ひょっとして、もう口座の開設済みとかじゃない？ サバコイン残高の確認は→ `!coin`")
             }
         }).catch((err)=>{
-            message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+            message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
             console.log(err)
         })
     } else if (message.content==='!coin') {
@@ -65,7 +65,7 @@ client.on('message', message =>{
                 message.reply("もしかしてサバコインの口座を開いてないんじゃない？ まずは口座の開設から→ `!register`")
             }
         }).catch(err=>{
-            message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+            message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
             console.log(err)
         })
     } else if( message.content.startsWith(`!throw`)  ) {
@@ -89,11 +89,11 @@ client.on('message', message =>{
                                             toUserCoinAccount.update({ balance: firebaseAdmin.firestore.FieldValue.increment( 1 ), total_get: firebaseAdmin.firestore.FieldValue.increment( 1 ) }).then(()=>{
                                                 message.reply(':money_with_wings: '+user.username+' さんにサバコインを送りました！ サバコイン残高の確認は→ `!coin`')                        
                                             }).catch(err=> {
-                                                message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                                                message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
                                                 console.log(err)
                                             })
                                         }).catch(err=> {
-                                            message.reply(':confused:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                                            message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
                                             console.log(err)
                                         })
                                     } else {
