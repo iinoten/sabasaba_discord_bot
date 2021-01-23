@@ -1,6 +1,7 @@
 require('dotenv').config()
 const discord = require('discord.js');
-const firebase = require('firebase')
+const firebase = require('firebase');
+const { firestore } = require('firebase-admin');
 const client = new discord.Client();
 const firebaseAdmin = require('firebase-admin');
 const ServiceAccount = require('./sabasabaserver-maneyforward-firebase-adminsdk-w7667-31b20c2f5d.json');
@@ -30,7 +31,7 @@ client.on('message', message =>{
         message.reply("可愛いね")
     } else if( message.content.startsWith(`ping`)  ) {
         message.reply("pong")
-        db.collection('test').doc(message.author.id).update({balance: firebaseAdmin.firestore.FieldValue.increment(-1)})
+        console.log(message.channel.id)
     } else if (message.content === "ちゃんと挨拶できてえらいねえアイスクリームちゃん" ) {
         message.reply("えっへん")
     } else if (message.content==="!report") {
@@ -118,11 +119,130 @@ client.on('message', message =>{
         } else {
             message.reply(':face_with_monocle: コインを送るには `!throw`から始めて送りたいユーザーをメンションしてみてね')
         }
+    } else if( message.content==='!slot-machine' | ':slot_machine:' ) {
+        //カジノ部屋でのルーレットマシン機能
+        let slot_pattern = [
+            ':seven:',
+            ':watermelon:',':watermelon:',':watermelon:',':watermelon:',':watermelon:',
+            ':fish:',':fish:',':fish:',':fish:',
+            ':cherries:',':cherries:',':cherries:',':cherries:',':cherries:',':cherries:',':cherries:',':cherries:',':cherries:',
+            ':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',':mushroom:',
+            ':green_heart:',':green_heart:',
+        ]
+        function rolling_slot_pattern (){ return slot_pattern[ Math.floor(Math.random() * slot_pattern.length) ] }
+        if( message.channel.id == "802336954640891936" ) {
+            //カジノ部屋だった場合
+            let userCoinAccount = db.collection('test').doc(message.author.id);
+            userCoinAccount.get().then( res => {
+                if(res.exists) {
+                    // 口座が存在した場合
+                    if( res.data().balance >= 3 ) {
+                        //残高があった場合
+                        userCoinAccount.update({balance: firebaseAdmin.firestore.FieldValue.increment(-3)}).then(()=>{
+                            message.reply(':slot_machine:スロットマシーンスタート！').then(res=>{
+                                setTimeout(()=> {
+                                    res.edit(rolling_slot_pattern() +rolling_slot_pattern() +rolling_slot_pattern() ).then(res2=>setTimeout(()=>{
+                                        res2.edit(rolling_slot_pattern() +rolling_slot_pattern() +rolling_slot_pattern() ).then(res3=>setTimeout(()=>{
+                                                    res3.edit(rolling_slot_pattern() +rolling_slot_pattern() +rolling_slot_pattern() ).then(res6=>setTimeout(()=>{
+                                                        const slot_pattern_A = rolling_slot_pattern();
+                                                        const slot_pattern_B = rolling_slot_pattern();
+                                                        const slot_pattern_C = rolling_slot_pattern();
+                                                        res6.edit(slot_pattern_A +slot_pattern_B +slot_pattern_C ).then(resSlot=>{
+                                                            if ( slot_pattern_A == slot_pattern_B == slot_pattern_C ) {
+                                                                switch (slot_pattern_A) {
+                                                                    case ':seven:':
+                                                                        userCoinAccount.update({
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                        }).then(()=> {
+                                                                            resSlot.reply(':seven:'+'大当たり！ おめでとうございます:partying_face: '+message.author.username+'さんが、スロットマシーンで:seven:を揃えて77コインを獲得しました！:seven:')
+                                                                        }).catch(err=> {
+                                                                            message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                                                                        })
+                                                                        break;
+                                                                    case ':watermelon:':
+                                                                        userCoinAccount.update({
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                        }).then(()=> {
+                                                                            resSlot.reply(':watermelon:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:watermelon:を揃えて16コインを獲得しました！:watermelon:')
+                                                                        }).catch(err=> {
+                                                                            message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                                                                        })
+                                                                        break
+                                                                    case ':fish:':
+                                                                        userCoinAccount.update({
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                        }).then(()=> {
+                                                                            resSlot.reply(':fish:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:fish:を揃えて40コインを獲得しました！:fish:')
+                                                                        }).catch(err=> {
+                                                                            message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                                                                        })
+                                                                        break
+                                                                    case ':cherries:':
+                                                                        userCoinAccount.update({
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                        }).then(()=> {
+                                                                            resSlot.reply(':cherries:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:fish:を揃えて5コインを獲得しました！:fish:')
+                                                                        }).catch(err=> {
+                                                                            message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                                                                        })
+                                                                        break
+                                                                    case ':green_heart:':
+                                                                        userCoinAccount.update({
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                        }).then(()=> {
+                                                                            resSlot.reply(':fish:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:fish:を揃えて30コインを獲得しました！:fish:')
+                                                                        }).catch(err=> {
+                                                                            message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                                                                        })
+                                                                        break
+                                                                    case ':mushroom:':
+                                                                        userCoinAccount.update({
+                                                                            balance: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                            total_get: firebaseAdmin.firestore.FieldValue.increment(77),
+                                                                        }).then(()=> {
+                                                                            resSlot.reply(':mushroom:'+'当たり！ おめでとうございます:yum: '+message.author.username+'さんが、スロットマシーンで:mushroom:を揃えて3コインを獲得しました！:mushroom:')
+                                                                        }).catch(err=> {
+                                                                            message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                                                                        })
+                                                                        break
+                                                                }
+                                                            } else {
+                                                                resSlot.reply(':zany_face: はずれ！ また挑戦してみてね スロットマシーンのスタートは→ `!slot-machine`')
+                                                            }
+                                                        })
+                                                    }),300)
+                                        }),300)
+                                    }),300)
+                                },600)
+                            })
+                        }).catch(err => {
+                            message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                            console.log(err)
+                        })
+                    } else {
+                        // 残高がなかった場合
+                        message.reply(':weary: サバコインが足り無いよ、なんとか集めてきて！')
+                    }
+                } else {
+                    //口座が無かった場合
+                    message.reply(':weary: '+message.author.username+' さんのサバコイン口座がまだできていないっぽい... `!register` で作れることを教えてあげてみて')
+                }
+            }).catch(err=>{
+                message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                console.log(err)
+            })
+        } else {
+            //カジノ部屋じゃなかった場合
+            message.reply(':weary: ルーレットは #カジノ部屋 でできるよ！ #カジノ部屋 に移動して `!slot-machine` ってやってみて！')
+        }
     }
-/*もし送られたメッセージがこんにちはならこんにちは！と返します*/
 
 })
-/*messageが送られたときに反応します*/
 
 client.login(process.env.DISCORD_TOKEN);
 /*ここにさっきコピーしたTOKENを入れましょう*/
