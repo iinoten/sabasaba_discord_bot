@@ -44,7 +44,8 @@ client.on('message', message =>{
                 db.collection('test').doc(message.author.id).set({
                     balance: 20,
                     open_date: firebaseAdmin.firestore.Timestamp.now(),
-                    total_get: 20
+                    total_get: 20,
+                    userName: message.author.username
                 }).then(()=>{
                     message.reply(':coin: SabaSabaServer内の共通通貨、"サバコイン"の世界へようこそ！'+message.author.username+'さんのサバコイン口座を開設しました！:coin:')
                 }).catch(err=>{
