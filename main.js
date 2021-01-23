@@ -29,7 +29,7 @@ client.on('message', message =>{
     } else if( message.use === "好きだよ") {
         message.reply("可愛いね")
     } else if( message.content.startsWith(`ping`)  ) {
-        message.reply(":coin: lpong")
+        message.reply("pong")
         db.collection('test').doc(message.author.id).update({balance: firebaseAdmin.firestore.FieldValue.increment(-1)})
     } else if (message.content === "ちゃんと挨拶できてえらいねえアイスクリームちゃん" ) {
         message.reply("えっへん")
