@@ -74,7 +74,7 @@ client.on('message', message =>{
         //送金機能
         let fromUserCoinAccount = db.collection('test').doc(message.author.id);
         console.log("判定",Boolean(message.mentions.users.keys().length))
-        if( message.mentions.users.keys().length ) {
+        if( "message.mentions.users.keys().length" ) {
             message.mentions.users.map((user)=>{
                 let toUserCoinAccount = db.collection('test').doc(user.id);
                 if( !(message.author.id == user.id) ) {
@@ -241,6 +241,27 @@ client.on('message', message =>{
         } else {
             //カジノ部屋じゃなかった場合
             message.reply(':weary: ルーレットは #カジノ部屋 でできるよ！ #カジノ部屋 に移動して `!slot-machine` ってやってみて！')
+        }
+    } else if( message.content.startsWith(`!reward`) ) {
+        //報奨機能
+        const role = message.guild.roles.cache.find(roles=>roles.name === 'SabaCoin_Administrator')
+        if (!message.member.roles.cache.has(role.id)){
+            message.reply('君にその権限は与えられていないよ:sunglasses:')
+        } else {
+            let reward_value = message.content.split(' ')[1]
+            let reward_message = message.content.split(' ')[2]
+            console.log(Number(reward_value))
+            message.mentions.users.map(user => {
+                db.collection('test').doc(user.id).update({
+                    balance: firebaseAdmin.firestore.FieldValue.increment(Number(reward_value)),
+                    total_get: firebaseAdmin.firestore.FieldValue.increment(Number(reward_value)),
+                }).then(()=>{
+                    message.reply(reward_message + "！！ " + user.username+"さんに"+Number(reward_value) + "サバコインをプレゼント:coin:")
+                }).catch(err=>{
+                    message.reply(':thermometer_face:サバコイン データベースとの接続に障害が発生しています。時間を置いて試してみてください')
+                    console.log(err)
+                })
+            })
         }
     }
 
